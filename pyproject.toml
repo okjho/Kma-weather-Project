@@ -1,0 +1,23 @@
+[project]
+name = "kma-weather"
+version = "0.1.0"
+description = "기상청 단기예보 API(VilageFcstInfoService_2.0) Python 클라이언트 + FastAPI 서버"
+requires-python = ">=3.10"
+dependencies = [
+    "httpx>=0.27",
+    "pydantic>=2.5",
+]
+
+[project.optional-dependencies]
+server = ["fastapi>=0.110", "uvicorn>=0.29"]
+dev = ["pytest>=8", "fastapi>=0.110"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["kma_weather*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
