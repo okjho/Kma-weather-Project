@@ -40,6 +40,16 @@ app = FastAPI(
 )
 
 
+@app.middleware("http")
+async def add_utf8_charset(request: Request, call_next):
+        """JSON 응답에 charset=utf-8을 붙여서 폰 브라우저에서도 한글이 안 깨지게 한다."""
+        response = await call_next(request)
+        content_type = response.headers.get("content-type", "")
+        if content_type.startswith("application/json") and "charset" not in content_type:
+            response.headers["content-type"] = "application/json; charset=utf-8"
+        return response
+
+
 def get_client(request: Request) -> KMAClient:
     kma = getattr(request.app.state, "kma", None)
     if kma is None:
